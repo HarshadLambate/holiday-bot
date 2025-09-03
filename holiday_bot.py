@@ -4,7 +4,7 @@ from slack_sdk import WebClient
 from holidays import FESTIVALS
 
 # Load your Slack Bot token (set as environment variable)
-SLACK_BOT_TOKEN = os.getenv(SLACK_BOT_TOKEN)
+SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 client = WebClient(token=SLACK_BOT_TOKEN)
 
 # Replace with your channel ID (e.g. C12345…)
@@ -21,4 +21,5 @@ def check_and_send():
 
 if __name__ == "__main__":
     check_and_send()
+
 
