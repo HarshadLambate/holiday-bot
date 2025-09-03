@@ -1,2 +1,0 @@
-# holiday-bot
-Slack bot
