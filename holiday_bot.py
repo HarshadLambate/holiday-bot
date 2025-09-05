@@ -5,7 +5,7 @@ from holidays import FESTIVALS
 
 # Load Slack Bot token from GitHub Actions secrets
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
-CHANNEL_ID = os.getenv("SLACK_CHANNEL_ID")  # set in GitHub secrets
+CHANNEL_ID = os.getenv("SLACK_CHANNEL_ID").split(",")  # e.g. "C12345,C67890"  # set in GitHub secrets
 
 client = WebClient(token=SLACK_BOT_TOKEN)
 
@@ -22,3 +22,4 @@ def check_and_send():
 
 if __name__ == "__main__":
     check_and_send()
+
