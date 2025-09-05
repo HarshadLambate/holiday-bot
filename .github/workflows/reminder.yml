@@ -4,7 +4,10 @@ on:
   schedule:
     # Runs every year on Jan 1st at 09:00 AM UTC
     - cron: '0 9 1 1 *'
-  workflow_dispatch:   # 👈 allows manual trigger via GitHub Actions UI
+  workflow_dispatch:   # 👈 allows manual trigger from GitHub Actions
+
+permissions:
+  issues: write   # 👈 required so the workflow can create issues
 
 jobs:
   create-issue:
