@@ -14,7 +14,7 @@ def load_festivals():
         reader = csv.DictReader(csvfile)
         for row in reader:
             # Parse dd/mm/yyyy format
-            holiday_date = datetime.strptime(row["date"], "%d/%m/%Y").date()
+            holiday_date = datetime.strptime(row["date(d/m/y)"], "%d/%m/%Y").date()
             festivals[holiday_date] = {
                 "festival": row["festival"],
                 "location": row["location"]
@@ -47,3 +47,4 @@ def check_and_send():
 
 if __name__ == "__main__":
     check_and_send()
+
