@@ -15,6 +15,7 @@ client = WebClient(token=SLACK_BOT_TOKEN)
 def check_and_send():
     today = date.today()
     tomorrow = today + timedelta(days=1)
+    print(f"Today (UTC): {today}, Tomorrow (UTC): {tomorrow}")
 
     if tomorrow in FESTIVALS:
         message = FESTIVALS[tomorrow]
@@ -31,3 +32,4 @@ def check_and_send():
 
 if __name__ == "__main__":
     check_and_send()
+
