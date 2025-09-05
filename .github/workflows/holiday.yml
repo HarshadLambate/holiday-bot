@@ -25,5 +25,5 @@ jobs:
     - name: Run holiday bot
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+        SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_IDS }}
       run: python holiday_bot.py
