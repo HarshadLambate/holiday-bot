@@ -1,7 +1,7 @@
 import os
-import csv
 from datetime import datetime, date, timedelta
 from slack_sdk import WebClient
+from openpyxl import load_workbook
 
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 CHANNEL_IDS = os.getenv("SLACK_CHANNEL_IDS", "").split(",")
@@ -10,15 +10,24 @@ client = WebClient(token=SLACK_BOT_TOKEN)
 
 def load_festivals():
     festivals = {}
-    with open("holidays.csv", newline="", encoding="utf-8") as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            # Parse dd/mm/yyyy format
-            holiday_date = datetime.strptime(row["date(d/m/y)"], "%d/%m/%Y").date()
-            festivals[holiday_date] = {
-                "festival": row["festival"],
-                "location": row["location"]
-            }
+    wb = load_workbook("holidays.xlsx")
+    sheet = wb.active
+
+    # Assume headers in first row: date | festival | location
+    for row in sheet.iter_rows(min_row=2, values_only=True):
+        raw_date, festival, location = row
+        if not raw_date:
+            continue
+        # Handle both Excel date cells and string like "06/09/2025"
+        if isinstance(raw_date, datetime):
+            holiday_date = raw_date.date()
+        else:
+            holiday_date = datetime.strptime(str(raw_date).strip(), "%d/%m/%Y").date()
+
+        festivals[holiday_date] = {
+            "festival": str(festival).strip(),
+            "location": str(location).strip()
+        }
     return festivals
 
 def check_and_send():
@@ -47,4 +56,3 @@ def check_and_send():
 
 if __name__ == "__main__":
     check_and_send()
-
