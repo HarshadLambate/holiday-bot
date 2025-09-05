@@ -13,12 +13,21 @@ def load_festivals():
     wb = load_workbook("holidays.xlsx")
     sheet = wb.active
 
-    # Assume headers in first row: date | festival | location
+    # Read headers from the first row
+    headers = [cell.value for cell in sheet[1]]
+    date_idx = headers.index("date(d/m/y)")
+    fest_idx = headers.index("festival")
+    loc_idx = headers.index("location")
+
     for row in sheet.iter_rows(min_row=2, values_only=True):
-        raw_date, festival, location = row
+        raw_date = row[date_idx]
+        festival = row[fest_idx]
+        location = row[loc_idx]
+
         if not raw_date:
             continue
-        # Handle both Excel date cells and string like "06/09/2025"
+
+        # Handle Excel date cell or string
         if isinstance(raw_date, datetime):
             holiday_date = raw_date.date()
         else:
